@@ -1,4 +1,5 @@
-import { InlineAnnotation, AnnotationHandler, InnerToken } from "codehike/code";
+import type { InlineAnnotation, AnnotationHandler} from "codehike/code";
+import { InnerToken } from "codehike/code";
 import { interpolate, useCurrentFrame } from "remotion";
 import { useThemeColors } from "../calculate-metadata/theme";
 

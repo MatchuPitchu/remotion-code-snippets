@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "Preserve",
-    "moduleResolution": "Bundler",
-    "jsx": "react-jsx",
-    "outDir": "./dist",
-    "strict": true,
-    "noEmit": true,
     "lib": ["ES2022"],
+    "outDir": "./dist",
+
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "moduleDetection": "force",
+
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noUnusedLocals": true
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
+    "noUnusedLocals": true,
+
+    "moduleResolution": "Bundler",
+    "module": "Preserve",
+    "noEmit": true,
+
+    "jsx": "react-jsx"
   },
-  "exclude": ["public"]
+  "include": ["src/**/*", "*.config.js"]
 }

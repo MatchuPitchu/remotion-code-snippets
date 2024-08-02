@@ -1,9 +1,11 @@
 import { AbsoluteFill, Series, useVideoConfig } from 'remotion';
 import { ProgressBar } from './ProgressBar';
 import { CodeTransition } from './CodeTransition';
-import { HighlightedCode } from 'codehike/code';
-import { ThemeColors, ThemeProvider } from './calculate-metadata/theme';
-import { CSSProperties, useMemo } from 'react';
+import type { HighlightedCode } from 'codehike/code';
+import type { ThemeColors} from './calculate-metadata/theme';
+import { ThemeProvider } from './calculate-metadata/theme';
+import type { CSSProperties} from 'react';
+import { useMemo } from 'react';
 import { RefreshOnCodeChange } from './ReloadOnCodeChange';
 
 export type Props = {

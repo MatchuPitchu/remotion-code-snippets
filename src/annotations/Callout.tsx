@@ -1,6 +1,7 @@
-import {
+import type {
   InlineAnnotation,
-  AnnotationHandler,
+  AnnotationHandler} from "codehike/code";
+import {
   InnerLine,
   Pre,
 } from "codehike/code";

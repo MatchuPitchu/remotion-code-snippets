@@ -1,39 +1,31 @@
-import { useMemo } from "react";
-import { useCurrentFrame, useVideoConfig } from "remotion";
-import { useThemeColors } from "./calculate-metadata/theme";
-import React from "react";
+import { type CSSProperties, useMemo } from 'react';
+import { useCurrentFrame, useVideoConfig } from 'remotion';
+import { useThemeColors } from './calculate-metadata/theme';
 
-const Step: React.FC<{
+type StepProps = {
   index: number;
   currentStep: number;
   currentStepProgress: number;
-}> = ({ index, currentStep, currentStepProgress }) => {
+};
+
+const Step = ({ index, currentStep, currentStepProgress }: StepProps) => {
   const themeColors = useThemeColors();
 
-  console.log(themeColors);
-
-  const outer: React.CSSProperties = useMemo(() => {
+  const outer: CSSProperties = useMemo(() => {
     return {
-      backgroundColor:
-        themeColors.editor.lineHighlightBackground ??
-        themeColors.editor.rangeHighlightBackground,
+      backgroundColor: themeColors.editor.lineHighlightBackground ?? themeColors.editor.rangeHighlightBackground,
       borderRadius: 6,
-      overflow: "hidden",
-      height: "100%",
+      overflow: 'hidden',
+      height: '100%',
       flex: 1,
     };
   }, [themeColors]);
 
-  const inner: React.CSSProperties = useMemo(() => {
+  const inner: CSSProperties = useMemo(() => {
     return {
-      height: "100%",
+      height: '100%',
       backgroundColor: themeColors.icon.foreground,
-      width:
-        index > currentStep
-          ? 0
-          : index === currentStep
-            ? currentStepProgress * 100 + "%"
-            : "100%",
+      width: index > currentStep ? 0 : index === currentStep ? `${currentStepProgress * 100  }%` : '100%',
     };
   }, [themeColors.icon.foreground, index, currentStep, currentStepProgress]);
 
@@ -44,7 +36,7 @@ const Step: React.FC<{
   );
 };
 
-export function ProgressBar({ steps }: { steps: unknown[] }) {
+export const ProgressBar = ({ steps }: { steps: unknown[] }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
 
@@ -52,28 +44,23 @@ export function ProgressBar({ steps }: { steps: unknown[] }) {
   const currentStep = Math.floor(frame / stepDuration);
   const currentStepProgress = (frame % stepDuration) / stepDuration;
 
-  const container: React.CSSProperties = useMemo(() => {
-    return {
-      position: "absolute",
+  const container: CSSProperties = useMemo(
+    () => ({
+      position: 'absolute',
       top: 48,
-      left: 48,
-      right: 48,
+      insetInline: 48,
       height: 6,
-      display: "flex",
+      display: 'flex',
       gap: 12,
-    };
-  }, []);
+    }),
+    []
+  );
 
   return (
     <div style={container}>
       {steps.map((_, index) => (
-        <Step
-          key={index}
-          currentStep={currentStep}
-          currentStepProgress={currentStepProgress}
-          index={index}
-        />
+        <Step key={index} currentStep={currentStep} currentStepProgress={currentStepProgress} index={index} />
       ))}
     </div>
   );
-}
+};

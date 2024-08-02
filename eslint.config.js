@@ -4,13 +4,13 @@ import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import checkFile from 'eslint-plugin-check-file';
 import _import from 'eslint-plugin-import';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import typescriptEslint from 'typescript-eslint';
+import eslintRemotionPlugin from '@remotion/eslint-plugin/dist/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const baseDirectory = path.dirname(__filename);
@@ -25,7 +25,6 @@ export default typescriptEslint.config(
   eslint.configs.recommended,
   eslintConfigPrettier,
   ...typescriptEslint.configs.recommended,
-  ...flatCompat.extends('@remotion'),
   {
     ignores: ['**/node_modules', '**/public', '**/dist', '**/build', '**/coverage', '**/.husky'],
   },
@@ -34,7 +33,8 @@ export default typescriptEslint.config(
       'plugin:react/recommended',
       'plugin:react/jsx-runtime',
       'plugin:react-hooks/recommended',
-      'plugin:import/typescript'
+      'plugin:import/typescript',
+      'plugin:@remotion/recommended'
     )
   ),
   {
@@ -43,6 +43,7 @@ export default typescriptEslint.config(
       'react-hooks': fixupPluginRules(reactHooksPlugin),
       import: fixupPluginRules(_import),
       'check-file': checkFile,
+      '@remotion': eslintRemotionPlugin,
     },
     languageOptions: {
       globals: {
@@ -86,7 +87,6 @@ export default typescriptEslint.config(
           fixStyle: 'separate-type-imports', // allows e.g. import type { ... } from 'react' and import { ...} from 'react' and the first import type is completely removed by the compiler
         },
       ], // automatically detects if imported module is type or not and formats if needed
-      'react/jsx-props-no-spreading': 'off',
       'react/self-closing-comp': [
         'error',
         {
@@ -131,7 +131,7 @@ export default typescriptEslint.config(
       'prefer-object-spread': 'error',
       'prefer-rest-params': 'error',
       'prefer-template': 'error',
-      'require-await': 'error',
+      'require-await': 'warn',
     },
   }
 );

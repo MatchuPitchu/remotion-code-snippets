@@ -1,18 +1,18 @@
-import { highlight } from "codehike/code";
-import { createTwoslashFromCDN } from "twoslash-cdn";
-import { PublicFolderFile } from "./get-files";
-import { Theme } from "./theme";
+import { highlight } from 'codehike/code';
+import { createTwoslashFromCDN } from 'twoslash-cdn';
+import type { PublicFolderFile } from './get-files';
+import type { Theme } from './theme';
 
 const twoslash = createTwoslashFromCDN();
 
 export const processSnippet = async (step: PublicFolderFile, theme: Theme) => {
-  const splitted = step.filename.split(".");
+  const splitted = step.filename.split('.');
   const extension = splitted[splitted.length - 1];
   const twoslashResult =
-    extension === "ts" || extension === "tsx"
+    extension === 'ts' || extension === 'tsx'
       ? await twoslash.run(step.value, extension, {
           compilerOptions: {
-            lib: ["dom"],
+            lib: ['dom'],
           },
         })
       : null;
@@ -20,10 +20,10 @@ export const processSnippet = async (step: PublicFolderFile, theme: Theme) => {
   const highlighted = await highlight(
     {
       lang: extension,
-      meta: "",
+      meta: '',
       value: twoslashResult ? twoslashResult.code : step.value,
     },
-    theme,
+    theme
   );
 
   if (!twoslashResult) {
@@ -32,12 +32,9 @@ export const processSnippet = async (step: PublicFolderFile, theme: Theme) => {
 
   // If it is TypeScript code, let's also generate callouts (^?) and errors
   for (const { text, line, character, length } of twoslashResult.queries) {
-    const codeblock = await highlight(
-      { value: text, lang: "ts", meta: "callout" },
-      theme,
-    );
+    const codeblock = await highlight({ value: text, lang: 'ts', meta: 'callout' }, theme);
     highlighted.annotations.push({
-      name: "callout",
+      name: 'callout',
       query: text,
       lineNumber: line + 1,
       data: {
@@ -51,7 +48,7 @@ export const processSnippet = async (step: PublicFolderFile, theme: Theme) => {
 
   for (const { text, line, character, length } of twoslashResult.errors) {
     highlighted.annotations.push({
-      name: "error",
+      name: 'error',
       query: text,
       lineNumber: line + 1,
       data: { character },
