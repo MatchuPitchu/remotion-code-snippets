@@ -1,13 +1,8 @@
 # Remotion video
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.gif">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Remotion video with code snippets
+
+> [Documentation](https://www.remotion.dev/templates/code-hike)
 
 Welcome to your Remotion project!
 
@@ -16,30 +11,24 @@ Welcome to your Remotion project!
 **Install Dependencies**
 
 ```console
-npm i
+pnpm i
 ```
 
 **Start Preview**
 
 ```console
-npm start
+pnpm start
 ```
 
 **Change code snippets**
 
-The snippets are located in the `public` folder.  
+The snippets are located in the `public` folder.
 Change the code or create new files in there.
 
 **Render video**
 
 ```console
 npm run build
-```
-
-**Upgrade Remotion**
-
-```console
-bun run upgrade
 ```
 
 ## More examples

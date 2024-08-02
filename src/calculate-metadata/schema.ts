@@ -1,6 +1,6 @@
-import {z} from 'zod';
-import {themeSchema} from './theme';
+import { z } from "zod";
+import { themeSchema } from "./theme";
 
 export const schema = z.object({
-	theme: themeSchema,
+  theme: themeSchema,
 });
