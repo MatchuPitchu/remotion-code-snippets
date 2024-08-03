@@ -5,17 +5,30 @@ import type { Theme } from './theme';
 
 const twoslash = createTwoslashFromCDN();
 
+const getTwoslashResult = async ({ stepValue, extension }: { stepValue: string; extension: string }) => {
+  try {
+    const twoslashResult =
+      extension === 'ts' || extension === 'tsx'
+        ? await twoslash.run(stepValue, extension, {
+            compilerOptions: {
+              lib: ['es2022', 'dom', 'dom.iterable'],
+            },
+          })
+        : null;
+
+    return twoslashResult;
+  } catch (error) {
+    console.log('Error while fetching with twoslash-cdn', error);
+  }
+
+  return null;
+};
+
 export const processSnippet = async (step: PublicFolderFile, theme: Theme) => {
   const splitted = step.filename.split('.');
   const extension = splitted[splitted.length - 1];
-  const twoslashResult =
-    extension === 'ts' || extension === 'tsx'
-      ? await twoslash.run(step.value, extension, {
-          compilerOptions: {
-            lib: ['dom'],
-          },
-        })
-      : null;
+
+  const twoslashResult = await getTwoslashResult({ stepValue: step.value, extension });
 
   const highlighted = await highlight(
     {

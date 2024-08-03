@@ -1,12 +1,12 @@
-// import { useState } from 'react';
+import * as React from 'react';
 
-// const Button = () => {
-//   const [counter, setCounter] = useState(0);
+const Button = () => {
+  const [counter, setCounter] = React.useState<number>(0);
 
-//   const increase = () => setCounter((prev) => prev + 1);
+  const increase = () => setCounter((prev) => prev + 1);
 
-//   return <button onClick={increase}>{counter}</button>;
-// };
+  return <button onClick={increase}>{counter}</button>;
+};
 
 const user = {
   name: 'Lorem',

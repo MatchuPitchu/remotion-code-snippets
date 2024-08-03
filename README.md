@@ -1,6 +1,10 @@
 # Remotion video
 
-[Remotion](https://www.remotion.dev/templates/code-hike) video with code snippets based on [Code Hike](https://codehike.org).
+[Remotion](https://www.remotion.dev/templates/code-hike) video with code snippets.
+
+> Based on [Code Hike](https://codehike.org)
+
+> Usage of [TwoSlash](https://twoslash.netlify.app/refs/notations)
 
 ## Commands
 
