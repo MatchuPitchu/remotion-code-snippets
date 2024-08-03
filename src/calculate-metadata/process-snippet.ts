@@ -2,34 +2,28 @@ import { highlight } from 'codehike/code';
 import { createTwoslashFromCDN } from 'twoslash-cdn';
 import type { PublicFolderFile } from './get-files';
 import type { Theme } from './theme';
-import { JsxEmit } from 'typescript';
-// TODO: Wie kann ich react types importieren
-// import fs from 'node:fs';
+import { type CompilerOptions, JsxEmit, ScriptTarget } from 'typescript';
 
-// const fsMap = new Map<string, string>();
-// const reactDts = fs.readFileSync(require.resolve('@types/react/index.d.ts'), 'utf-8');
-// fsMap.set('react', reactDts);
-// const twoslash = createTwoslashFromCDN({
-//   fsMap,
-// });
+const compilerOptions: CompilerOptions = {
+  target: ScriptTarget.ES2022,
+  lib: ['dom', 'es2022'],
+  jsx: JsxEmit.ReactJSX,
+};
 
-const twoslash = createTwoslashFromCDN();
+const twoslash = createTwoslashFromCDN({ compilerOptions });
 
 const getTwoslashResult = async ({ stepValue, extension }: { stepValue: string; extension: string }) => {
   try {
     const twoslashResult =
       extension === 'ts' || extension === 'tsx'
         ? await twoslash.run(stepValue, extension, {
-            compilerOptions: {
-              lib: ['es2022', 'dom', 'dom.iterable'],
-              jsx: JsxEmit.Preserve,
-            },
+            compilerOptions,
           })
         : null;
 
     return twoslashResult;
   } catch (error) {
-    console.log('Error while fetching with twoslash-cdn', error);
+    console.log('Error while fetching with twoslash-cdn', stepValue, error);
   }
 
   return null;
@@ -47,7 +41,7 @@ export const processSnippet = async (step: PublicFolderFile, theme: Theme) => {
       meta: '',
       value: twoslashResult ? twoslashResult.code : step.value,
     },
-    theme
+    theme,
   );
 
   if (!twoslashResult) {
