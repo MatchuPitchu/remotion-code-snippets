@@ -1,17 +1,9 @@
-import * as React from 'react';
+import { useState } from 'react'
 
+// OPTION 1: toggle a boolean value with `useState`
 const Button = () => {
-  const [counter, setCounter] = React.useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false)
+  const toggle = () => setIsOpen((prevIsOpen) => !prevIsOpen)
 
-  const increase = () => setCounter((prev) => prev + 1);
-
-  return <button onClick={increase}>{counter}</button>;
-};
-
-const user = {
-  name: 'Lorem',
-  age: 26,
-};
-
-console.log(user);
-//           ^?
+  return <button onClick={toggle}>Click</button>
+}

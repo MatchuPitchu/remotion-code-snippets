@@ -2,6 +2,16 @@ import { highlight } from 'codehike/code';
 import { createTwoslashFromCDN } from 'twoslash-cdn';
 import type { PublicFolderFile } from './get-files';
 import type { Theme } from './theme';
+import { JsxEmit } from 'typescript';
+// TODO: Wie kann ich react types importieren
+// import fs from 'node:fs';
+
+// const fsMap = new Map<string, string>();
+// const reactDts = fs.readFileSync(require.resolve('@types/react/index.d.ts'), 'utf-8');
+// fsMap.set('react', reactDts);
+// const twoslash = createTwoslashFromCDN({
+//   fsMap,
+// });
 
 const twoslash = createTwoslashFromCDN();
 
@@ -12,6 +22,7 @@ const getTwoslashResult = async ({ stepValue, extension }: { stepValue: string; 
         ? await twoslash.run(stepValue, extension, {
             compilerOptions: {
               lib: ['es2022', 'dom', 'dom.iterable'],
+              jsx: JsxEmit.Preserve,
             },
           })
         : null;
