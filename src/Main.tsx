@@ -1,10 +1,10 @@
 import { AbsoluteFill, Series, useVideoConfig } from 'remotion';
-import { ProgressBar } from './ProgressBar';
-import { CodeTransition } from './CodeTransition';
+import { ProgressBar } from './progress-bar/progress-bar';
+import { CodeTransition } from './code-transition';
 import type { HighlightedCode } from 'codehike/code';
-import type { ThemeColors} from './calculate-metadata/theme';
+import type { ThemeColors } from './calculate-metadata/theme';
 import { ThemeProvider } from './calculate-metadata/theme';
-import type { CSSProperties} from 'react';
+import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import { RefreshOnCodeChange } from './ReloadOnCodeChange';
 
@@ -25,7 +25,7 @@ export const Main = ({ steps, themeColors }: Props) => {
     () => ({
       backgroundColor: themeColors.background,
     }),
-    [themeColors]
+    [themeColors],
   );
 
   const style: CSSProperties = useMemo(() => {
@@ -41,7 +41,7 @@ export const Main = ({ steps, themeColors }: Props) => {
         <AbsoluteFill style={style}>
           <Series>
             {steps.map((step, index) => (
-              <Series.Sequence key={index} layout='none' durationInFrames={stepDuration} name={step.meta}>
+              <Series.Sequence key={index} layout="none" durationInFrames={stepDuration} name={step.meta}>
                 <CodeTransition oldCode={steps[index - 1]} newCode={step} durationInFrames={transitionDuration} />
               </Series.Sequence>
             ))}

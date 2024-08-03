@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperti
 
 import type { TokenTransitionsSnapshot } from 'codehike/utils/token-transitions';
 import { calculateTransitions, getStartingSnapshot } from 'codehike/utils/token-transitions';
-import { applyStyle } from './utils';
+import { applyStyle } from './utils/apply-style';
 import { callout } from './annotations/Callout';
 
 import { loadFont } from '@remotion/google-fonts/RobotoMono';
@@ -77,7 +77,7 @@ export const CodeTransition = ({ oldCode, newCode, durationInFrames = 30 }: Code
       fontFamily,
       tabSize: 3,
     }),
-    []
+    [],
   );
 
   return <Pre ref={ref} code={code} handlers={handlers} style={style} />;
