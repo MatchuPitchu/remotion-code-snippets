@@ -1,10 +1,6 @@
 # Remotion video
 
-Remotion video with code snippets
-
-> [Documentation](https://www.remotion.dev/templates/code-hike)
-
-Welcome to your Remotion project!
+[Remotion](https://www.remotion.dev/templates/code-hike) video with code snippets based on [Code Hike](https://codehike.org).
 
 ## Commands
 

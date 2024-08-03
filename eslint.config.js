@@ -132,6 +132,7 @@ export default typescriptEslint.config(
       'prefer-rest-params': 'error',
       'prefer-template': 'error',
       'require-await': 'warn',
+      'react/prop-types': 'off',
     },
   }
 );

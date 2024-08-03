@@ -1,38 +1,31 @@
-import { Easing, interpolate , continueRender, delayRender, useCurrentFrame } from "remotion";
-import type { HighlightedCode, AnnotationHandler } from "codehike/code";
-import { Pre } from "codehike/code";
-import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { Easing, interpolate, continueRender, delayRender, useCurrentFrame } from 'remotion';
+import type { HighlightedCode, AnnotationHandler } from 'codehike/code';
+import { Pre } from 'codehike/code';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 
-import type {
-  TokenTransitionsSnapshot} from "codehike/utils/token-transitions";
-import {
-  calculateTransitions,
-  getStartingSnapshot
-} from "codehike/utils/token-transitions";
-import { applyStyle } from "./utils";
-import { callout } from "./annotations/Callout";
+import type { TokenTransitionsSnapshot } from 'codehike/utils/token-transitions';
+import { calculateTransitions, getStartingSnapshot } from 'codehike/utils/token-transitions';
+import { applyStyle } from './utils';
+import { callout } from './annotations/Callout';
 
-import { loadFont } from "@remotion/google-fonts/RobotoMono";
-import { tokenTransitions } from "./annotations/InlineToken";
-import { errorInline, errorMessage } from "./annotations/Error";
+import { loadFont } from '@remotion/google-fonts/RobotoMono';
+import { tokenTransitions } from './annotations/InlineToken';
+import { errorInline, errorMessage } from './annotations/Error';
 
 const { fontFamily } = loadFont();
 
-export function CodeTransition({
-  oldCode,
-  newCode,
-  durationInFrames = 30,
-}: {
+type CodeTransitionProps = {
   oldCode: HighlightedCode | null;
   newCode: HighlightedCode;
   durationInFrames?: number;
-}) {
+};
+
+export const CodeTransition = ({ oldCode, newCode, durationInFrames = 30 }: CodeTransitionProps) => {
   const frame = useCurrentFrame();
 
-  const ref = React.useRef<HTMLPreElement>(null);
-  const [oldSnapshot, setOldSnapshot] =
-    useState<TokenTransitionsSnapshot | null>(null);
-  const [handle] = React.useState(() => delayRender());
+  const ref = useRef<HTMLPreElement>(null);
+  const [oldSnapshot, setOldSnapshot] = useState<TokenTransitionsSnapshot | null>(null);
+  const [handle] = useState(() => delayRender());
 
   const prevCode: HighlightedCode = useMemo(() => {
     return oldCode || { ...newCode, tokens: [], annotations: [] };
@@ -54,13 +47,14 @@ export function CodeTransition({
       setOldSnapshot(getStartingSnapshot(ref.current!));
       return;
     }
+
     const transitions = calculateTransitions(ref.current!, oldSnapshot);
     transitions.forEach(({ element, keyframes, options }) => {
       const delay = durationInFrames * options.delay;
       const duration = durationInFrames * options.duration;
       const progress = interpolate(frame, [delay, delay + duration], [0, 1], {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
         easing: Easing.inOut(Easing.ease),
       });
 
@@ -73,19 +67,18 @@ export function CodeTransition({
     continueRender(handle);
   });
 
-  const handlers: AnnotationHandler[] = useMemo(() => {
-    return [tokenTransitions, callout, errorInline, errorMessage];
-  }, []);
+  const handlers: AnnotationHandler[] = useMemo(() => [tokenTransitions, callout, errorInline, errorMessage], []);
 
-  const style: React.CSSProperties = useMemo(() => {
-    return {
-      position: "relative",
+  const style: CSSProperties = useMemo(
+    () => ({
+      position: 'relative',
       fontSize: 40,
       lineHeight: 1.5,
       fontFamily,
       tabSize: 3,
-    };
-  }, []);
+    }),
+    []
+  );
 
   return <Pre ref={ref} code={code} handlers={handlers} style={style} />;
-}
+};
