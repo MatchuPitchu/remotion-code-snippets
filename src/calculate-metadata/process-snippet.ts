@@ -3,6 +3,8 @@ import { createTwoslashFromCDN } from 'twoslash-cdn';
 import type { PublicFolderFile } from './get-files';
 import type { Theme } from './theme';
 import { type CompilerOptions, JsxEmit, ScriptTarget } from 'typescript';
+import { createStorage } from 'unstorage';
+import indexedDbDriver from 'unstorage/drivers/indexedb';
 
 const compilerOptions: CompilerOptions = {
   target: ScriptTarget.ES2022,
@@ -10,7 +12,13 @@ const compilerOptions: CompilerOptions = {
   jsx: JsxEmit.ReactJSX,
 };
 
-const twoslash = createTwoslashFromCDN({ compilerOptions });
+// An example of using unstorage with IndexedDB to cache the virtual file system
+// Docu: https://unstorage.unjs.io/drivers/browser#indexeddb
+const storage = createStorage({
+  driver: indexedDbDriver({ base: 'twoslash-cdn' }),
+});
+
+const twoslash = createTwoslashFromCDN({ compilerOptions, storage });
 
 const getTwoslashResult = async ({ stepValue, extension }: { stepValue: string; extension: string }) => {
   try {
