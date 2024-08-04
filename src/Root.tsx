@@ -15,8 +15,10 @@ export const RemotionRoot = () => {
         theme: 'dark-plus' as const,
       }}
       fps={30}
-      width={1920}
-      height={1080}
+      // width={1920}
+      // height={1080}
+      width={1280}
+      height={700}
       calculateMetadata={calculateMetadata}
       schema={schema}
     />

@@ -7,8 +7,8 @@ import { createStorage } from 'unstorage';
 import indexedDbDriver from 'unstorage/drivers/indexedb';
 
 const compilerOptions: CompilerOptions = {
-  target: ScriptTarget.ES2022,
-  lib: ['dom', 'es2022'],
+  target: ScriptTarget.ESNext,
+  lib: ['dom', 'ESNext'],
   jsx: JsxEmit.ReactJSX,
 };
 
