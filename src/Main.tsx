@@ -6,7 +6,7 @@ import type { ThemeColors } from './calculate-metadata/theme';
 import { ThemeProvider } from './calculate-metadata/theme';
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
-import { RefreshOnCodeChange } from './ReloadOnCodeChange';
+import { useReloadOnCodeChange } from './hooks/use-reload-on-code-change';
 
 export type Props = {
   steps: HighlightedCode[] | null;
@@ -16,6 +16,8 @@ export type Props = {
 export const Main = ({ steps, themeColors }: Props) => {
   if (!steps) throw new Error('Steps are not defined');
   if (!themeColors) throw new Error('Theme colors are not defined');
+
+  useReloadOnCodeChange();
 
   const { durationInFrames } = useVideoConfig();
   const stepDuration = durationInFrames / steps.length;
@@ -48,7 +50,6 @@ export const Main = ({ steps, themeColors }: Props) => {
           </Series>
         </AbsoluteFill>
       </AbsoluteFill>
-      <RefreshOnCodeChange />
     </ThemeProvider>
   );
 };
