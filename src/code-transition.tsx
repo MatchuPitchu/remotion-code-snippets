@@ -8,7 +8,7 @@ import { calculateTransitions, getStartingSnapshot } from 'codehike/utils/token-
 import { applyStyle } from './utils/apply-style';
 import { callout } from './annotations/Callout';
 
-import { loadFont } from '@remotion/google-fonts/RobotoMono';
+import { loadFont } from '@remotion/google-fonts/JetBrainsMono';
 import { tokenTransitions } from './annotations/InlineToken';
 import { errorInline, errorMessage } from './annotations/Error';
 
